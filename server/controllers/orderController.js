@@ -83,9 +83,14 @@ export async function addOrder(req, res){
 
 //to edit order
 export async function editOrder(req, res){
+    const {id,product,quantity}  = req.body;
     try {
-         const {id,product,quantity}  = req.body;
-        //  const { id } = req.order;
+        const order = await OrderModel.findOne({id:id});
+        
+        if(!order){
+            return res.status(404).json({ message: "order not found" });
+        
+        }
 
          if(id){
              const body = req.body;
