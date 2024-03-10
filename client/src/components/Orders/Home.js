@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+import { getAllOrders } from '../../helper/order';
+
 const Home = () => {
+
+  const [loading,setLoading] = useState(true);
+  const [orders,setOrders] = useState([]);
+
+  useEffect(() => {
+    getAllOrders()
+      .then((data) => {
+        setOrders(data.data);
+        setLoading(false);
+        console.log(orders);
+      })
+      .catch((error) => {
+        console.error('Error occurred:', error);
+      });
+  }, [loading]);
+
+  if(loading){
+    return(
+      <div>loading</div>
+    )
+  }
+
   return (
     <div className="my-3">
       <div className="table-responsive">
@@ -39,14 +63,17 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
+{!orders? <>hello </> : <>
+
+          {orders.map((order, index) => (
+            <tr key={order._id}>
+              <th scope="row">{index + 1}</th>
+              <td>{order.id}</td>
+              <td>{order.customer_name}</td>
+              <td>{order.customer_email}</td>
+              <td>{order.product}</td>
+              <td>{order.quantity}</td>
+              <td>{order.order_value}</td>
               <td>
                 <EditIcon />
               </td>
@@ -54,7 +81,10 @@ const Home = () => {
                 <DeleteIcon />
               </td>
             </tr>
-          </tbody>
+          ))}
+</>
+}
+        </tbody>
         </table>
       </div>
     </div>

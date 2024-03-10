@@ -23,8 +23,8 @@ const [{ apiData }] = useFetch();
   return (
     <div className='max-w-[1640px] mx-auto flex justify-between items-center p-4 bg-info'>
       <ul>
-        <li>Name</li>
-        <li>Email</li>
+        <li>{apiData?.firstName}</li>
+        <li>{apiData?.email}</li>
       </ul>
 
 <ul className='d-flex'>
