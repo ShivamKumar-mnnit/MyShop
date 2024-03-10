@@ -36,17 +36,17 @@ router.route('/resetPassword').put(controller.verifyUser, controller.resetPasswo
 
 //Shop-Orders routes
 /** POST Methods */
-router.route('/order/addneworder').post(orderController.addOrder); // add an order
+router.route('/order/addneworder').post(Auth,orderController.addOrder); // add an order
 
 /** GET Methods */
-router.route('/orders').get(orderController.getAllOrder) // get all orders
-router.route('/order/:id').get(orderController.getOrderbyid) // get one order by id
+router.route('/orders').get(Auth,orderController.getAllOrder) // get all orders
+router.route('/order/:id').get(Auth,orderController.getOrderbyid) // get one order by id
 
 /** PUT Method */
-router.route('/order/edit').put(orderController.editOrder); // is use to update the order
+router.route('/order/edit').put(Auth,orderController.editOrder); // is use to update the order
 
 /** DELETE Method */
-router.route('/order/delete/:id').delete(orderController.deleteOrder); // is use to delete the order
+router.route('/order/delete/:id').delete(Auth,orderController.deleteOrder); // is use to delete the order
 
 
 export default router;
