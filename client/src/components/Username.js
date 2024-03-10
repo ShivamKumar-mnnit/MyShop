@@ -62,7 +62,7 @@ export default function Username() {
 
       toast.promise(registerPromise, {
         loading: 'Checking...',
-        success : <b>registered Successfully...!</b>,
+        success : <b>checking...</b>,
         error : <b>registration Failed</b>
       });
       registerPromise.then(

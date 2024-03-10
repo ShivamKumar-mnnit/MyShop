@@ -8,7 +8,7 @@ import useFetch from '../hooks/fetch.hook';
 import { updateUser } from '../helper/helper'
 import { useNavigate } from 'react-router-dom'
 
-// import { googleLogout } from '@react-oauth/google';
+import { googleLogout } from '@react-oauth/google';
 
 import styles from '../styles/Username.module.css';
 import extend from '../styles/Profile.module.css'
@@ -52,7 +52,12 @@ export default function Profile() {
     setFile(base64);
   }
 
-
+// logout handler function
+function userLogout(){
+  googleLogout();
+  localStorage.removeItem('token');
+  navigate('/login')
+}
 
   
 
@@ -97,34 +102,12 @@ export default function Profile() {
                
                 <input {...formik.getFieldProps('address')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Address' />
                 
-
-
- {
-  !apiData?.role ?
-
-   <div className="d-flex">
-                  <input
-  {...formik.getFieldProps('role')}
-  type="checkbox"
-  checked={formik.values.role || false} // Set the checked attribute based on the formik values, default to false if undefined or null
-/>
-<p className='mx-1'>Check the box to be admin and Update</p>
-</div>
-
-:
-<></>
-
-}               
-
-
-
-
                   <button className={styles.btn} type='submit'>Update</button>
               </div>
 
 
               <div className="text-center py-4">
-                <span className='text-gray-500'><button className='text-red-500' to="/dashboard">Back to dashboard</button></span>
+                <span className='text-gray-500'><button className='text-red-500' onClick={userLogout}>Logout</button></span>
               </div>
 
           </form>

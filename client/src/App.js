@@ -24,7 +24,7 @@ export default function App() {
 const router = createBrowserRouter([
     {
         path : '/',
-        element : <Profile></Profile>
+        element : <AuthorizeUser><Profile /></AuthorizeUser>
     },
     {
         path : '/login',
