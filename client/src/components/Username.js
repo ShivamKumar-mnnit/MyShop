@@ -10,6 +10,7 @@ import { verifyGoogle } from '../helper/helper'
 
 
 
+
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/Username.module.css';
 
@@ -21,6 +22,9 @@ export default function Username() {
   const navigate = useNavigate();
   const setUsername = useAuthStore(state => state.setUsername);
   const location = useLocation();
+
+
+
 
   const formik = useFormik({
     initialValues : {
@@ -42,13 +46,9 @@ export default function Username() {
 
 
   function handleCallbackResponse(res){
-        
-    // console.log("Encoded jwt id token " + res.credential);
     var userObject = jwt_decode(res.credential);
     console.log(userObject);
-    // setUser(userObject);
 
-   
     const googlecredentials = {
       username : userObject.email,
       email : userObject.email,
@@ -62,7 +62,7 @@ export default function Username() {
 
       toast.promise(registerPromise, {
         loading: 'Checking...',
-        success : <b>checking...</b>,
+        success : <b></b>,
         error : <b>registration Failed</b>
       });
       registerPromise.then(
@@ -100,9 +100,9 @@ export default function Username() {
 
     google.accounts.id.renderButton(
       document.getElementById('signInDiv'),
-      {theme : "outline",size: "large", text: "Sign in with Google"}
+      {theme : "outline",size: "large", text: "Sign in with Google"},
     );
-    google.accounts.id.prompt();
+    // google.accounts.id.prompt();
    
   }
   return () => {
@@ -146,7 +146,7 @@ export default function Username() {
               </div>
 
               <div className="text-center py-4">
-                <span className='text-gray-500'>Not a Member <Link className='text-red-500' to="/register">Register Now</Link></span>
+                <span className='text-gray-500'>Not a Member? <Link className='text-red-500' to="/register">Register Now</Link></span>
               </div>
 
           </form>

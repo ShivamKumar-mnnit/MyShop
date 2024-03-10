@@ -1,5 +1,7 @@
 import OrderModel from '../model/Order.model.js'
-import mongoose from 'mongoose';
+const p1=29;
+const p2=49;
+const p3=149;
 
 //to get all order details
 export async function getAllOrder(req, res){
@@ -48,9 +50,9 @@ export async function addOrder(req, res){
         });
 
         var order_value=0;
-        if(product === "Product 1")order_value=29;
-        if(product === "Product 2")order_value=49;
-        if(product === "Product 3")order_value=149;
+        if(product === "Product 1")order_value=p1;
+        if(product === "Product 2")order_value=p2;
+        if(product === "Product 3")order_value=p3;
         
         order_value=order_value*quantity;
 
@@ -95,9 +97,9 @@ export async function editOrder(req, res){
          if(id){
              const body = req.body;
              var price = 0;
-        if(product === "Product 1")price=29;
-        if(product === "Product 2")price=49;
-        if(product === "Product 3")price=149;
+        if(product === "Product 1")price=p1;
+        if(product === "Product 2")price=p2;
+        if(product === "Product 3")price=p3;
 
             body.order_value = price*quantity;
              // update the data

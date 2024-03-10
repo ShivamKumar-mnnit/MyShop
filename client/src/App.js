@@ -1,5 +1,5 @@
-import React, { useEffect,useState } from 'react'
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import React from 'react'
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 
 
@@ -12,6 +12,10 @@ import Recovery from './components/Recovery';
 import Reset from './components/Reset';
 import PageNotFound from './components/PageNotFound';
 
+// import orderComponents
+import Navbar from './components/Orders/Navbar';
+import Home from './components/Orders/Home';
+
 
 /** auth middleware */
 import { AuthorizeUser, ProtectRoute } from './middleware/auth'
@@ -22,10 +26,6 @@ export default function App() {
 
 /** root routes */
 const router = createBrowserRouter([
-    {
-        path : '/',
-        element : <AuthorizeUser><Profile /></AuthorizeUser>
-    },
     {
         path : '/login',
         element : <Username></Username>
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     },
     {
         path : '/profile',
-        element : <AuthorizeUser><Profile /></AuthorizeUser>
+        element : <AuthorizeUser><Navbar/><Profile /></AuthorizeUser>
     },
     {
         path : '/recovery',
@@ -50,8 +50,17 @@ const router = createBrowserRouter([
         path : '/reset',
         element : <Reset></Reset>
     },
+    
+    
+    
+    {
+        path : '/',
+        element : <AuthorizeUser><Navbar/><Home/></AuthorizeUser>
+    },
   
     
+
+
 
 
 
