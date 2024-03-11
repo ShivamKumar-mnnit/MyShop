@@ -9,6 +9,7 @@ import './Home.css'
 const Home = () => {
 
   //States
+  const [grandTotal, setGrandTotal] = useState(0);
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [sortOption, setSortOption] = useState("#");
@@ -28,7 +29,7 @@ const Home = () => {
   const [editOrderId, setEditOrderId] = useState(null);
 
   //Functions
-// 1)Search Function 
+  // 1)Search Function 
   const handleSearch = (e) => {
     e.preventDefault();
     // Filter orders based on search criteria
@@ -43,7 +44,7 @@ const Home = () => {
     setSearchResults(filteredOrders);
   };
 
-// 2)Sorting Function 
+  // 2)Sorting Function 
 
   const sortOrders = (orders, sortOption) => {
     switch (sortOption) {
@@ -133,7 +134,7 @@ const Home = () => {
     });
   }
 
-// 5)Function to delete Orders 
+  // 5)Function to delete Orders 
 
   const handleDeleteOrder = async (orderId) => {
     try {
@@ -149,11 +150,15 @@ const Home = () => {
   };
 
 
-// 6)Function to get Orders 
+  // 6)Function to get Orders 
   useEffect(() => {
     getAllOrders()
       .then((data) => {
         const sortedOrders = sortOrders(data.data, sortOption);
+        // Calculate grandTotal by summing up order values
+        const total = sortedOrders.reduce((acc, order) => acc + order.order_value, 0);
+        setGrandTotal(total);
+
         setOrders(sortedOrders);
         setLoading(false);
         console.log(orders);
@@ -179,12 +184,12 @@ const Home = () => {
 
 
 
-//handling data fetching
+  //handling data fetching
   if (loading) {
     return (
       <div className='container' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
         <FadeLoader color="#36d7b7" />
-        Loading
+        Loading...
       </div>
     )
   }
@@ -195,9 +200,20 @@ const Home = () => {
       <div className="table-responsive">
 
 
-{/* 1)        Pagination */}
-        <div class="overflow-x-auto mx-3">
-          <nav aria-label="Page navigation example">
+        {/* 1)        Pagination */}
+        <div class="overflow-x-auto mx-3 d-flex">
+          <div>
+            <div className='d-flex'>
+              <h2 className='bold'>Total Orders: </h2>
+              <span className='mx-3'>{orders.length}</span>
+            </div>
+            <div className='d-flex'>
+              <h2 className='bold'>GrandTotal: </h2>
+              <span className='mx-3'>${grandTotal}</span>
+            </div>
+          </div>
+
+          <nav aria-label="Page navigation example mx-3">
             <ul className="pagination">
               <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                 <a
@@ -233,8 +249,7 @@ const Home = () => {
 
 
 
-
-{/* 2)        Table  */}
+        {/* 2)        Table  */}
         <table className="table">
           <thead className="table-warning">
             <tr>
@@ -244,7 +259,7 @@ const Home = () => {
               <th scope="col" colSpan="2">
 
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><div className="btn btn-success" data-toggle="modal">
-                  <AddCircleOutlineIcon /> <span>Add New Order</span>
+                  <AddCircleOutlineIcon /> <span>Add</span>
                 </div></button>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -255,18 +270,18 @@ const Home = () => {
                         <button type="button" class="btn-close closebtn" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}>X</button>
                       </div>
                       <div class="modal-body">
-                        <form>
+                        <form onSubmit={handleFormSubmit}>
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Order Id</label>
-                            <input type="text" class="form-control" id="id" name='id' value={newOrderData.id} onChange={handleInputChange} />
+                            <input type="text" class="form-control" id="id" name='id' value={newOrderData.id} onChange={handleInputChange} minLength={1} required placeholder='*please enter an unique order id' />
                           </div>
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Customer Name</label>
-                            <input type="text" class="form-control" id="customer_name" name='customer_name' value={newOrderData.customer_name} onChange={handleInputChange} />
+                            <input type="text" class="form-control" id="customer_name" name='customer_name' value={newOrderData.customer_name} onChange={handleInputChange} minLength={3} required />
                           </div>
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Customer_Email</label>
-                            <input type="text" class="form-control" id="customer_email" name='customer_email' value={newOrderData.customer_email} onChange={handleInputChange} />
+                            <input type="email" class="form-control" id="customer_email" name='customer_email' value={newOrderData.customer_email} onChange={handleInputChange} minLength={5} required />
                           </div>
                           <div className="mb-3">
                             <label htmlFor="product" className="col-form-label">
@@ -280,6 +295,7 @@ const Home = () => {
                                 name="product"
                                 value={newOrderData.product}
                                 onChange={handleInputChange}
+                                minLength={2} required
                               >
                                 <option value="">Select a Product</option>
                                 <option value="Product 1">Product 1 ($29)</option>
@@ -291,13 +307,13 @@ const Home = () => {
 
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Quantity</label>
-                            <input type="text" class="form-control" id="quantity" name='quantity' value={newOrderData.quantity} onChange={handleInputChange} />
+                            <input type="text" class="form-control" id="quantity" name='quantity' value={newOrderData.quantity} onChange={handleInputChange} minLength={1} required />
                           </div>
+                          <button type="submit" class="btn btn-primary modalsavebtn" >Add Order</button>
                         </form>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary modalclosebtn" data-bs-dismiss="modal" onClick={handleClose}>Close</button>
-                        <button type="button" class="btn btn-primary modalsavebtn" onClick={handleFormSubmit} data-bs-dismiss="modal" >Add Order</button>
                       </div>
                     </div>
                   </div>
@@ -399,7 +415,7 @@ const Home = () => {
                   <td>{order.customer_email}</td>
                   <td>{order.product}</td>
                   <td>{order.quantity}</td>
-                  <td>{order.order_value}</td>
+                  <td>${order.order_value}</td>
                   <td>
                     <div
                       type="button"
@@ -490,7 +506,7 @@ const Home = () => {
 
 
 
-{/* 3)        Pagination */}
+        {/* 3)        Pagination */}
         <div class="overflow-x-auto mx-3">
           <nav aria-label="Page navigation example">
             <ul className="pagination">

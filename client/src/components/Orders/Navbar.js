@@ -28,7 +28,6 @@ const [{ apiData }] = useFetch();
       </ul>
 
 <ul className='d-flex'>
-<li className='mx-3'>GrandTotal</li>
    <li><a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
    
    <button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
