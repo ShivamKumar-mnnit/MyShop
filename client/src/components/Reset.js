@@ -8,6 +8,8 @@ import { useAuthStore } from '../store/store';
 import { useNavigate, Navigate } from 'react-router-dom';
 import useFetch from '../hooks/fetch.hook'
 
+import FadeLoader from "react-spinners/FadeLoader";
+
 import styles from '../styles/Username.module.css';
 
 export default function Reset() {
@@ -41,7 +43,7 @@ export default function Reset() {
   })
 
 
-  if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
+  if(isLoading) return <h1 className='text-2xl font-bold'>  <FadeLoader color="#36d7b7" /> isLoading</h1>;
   if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
   if(status && status !== 201) return <Navigate to={'/password'} replace={true}></Navigate>
 

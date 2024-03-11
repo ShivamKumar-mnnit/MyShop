@@ -3,6 +3,17 @@ const p1=29;
 const p2=49;
 const p3=149;
 
+
+function getProductPrice(product) {
+    const priceMap = {
+        'Product 1': p1,
+        'Product 2': p2,
+        'Product 3': p3,
+    };
+
+    return priceMap[product] || 0;
+}
+
 //to get all order details
 export async function getAllOrder(req, res){
     try {
@@ -84,38 +95,31 @@ export async function addOrder(req, res){
 
 
 //to edit order
-export async function editOrder(req, res){
-    const {id,product,quantity}  = req.body;
+export async function editOrder(req, res) {
+    const { product, quantity } = req.body;
+    const id = req.params.id; // Extract the order ID from the request parameters 
     try {
-        const order = await OrderModel.findOne({id:id});
-        
-        if(!order){
-            return res.status(404).json({ message: "order not found" });
-        
+        const order = await OrderModel.findOne({ id: id });
+
+        if (!order) {
+            return res.status(404).json({ error: "Order not found" });
         }
 
-         if(id){
-             const body = req.body;
-             var price = 0;
-        if(product === "Product 1")price=p1;
-        if(product === "Product 2")price=p2;
-        if(product === "Product 3")price=p3;
+        const price = getProductPrice(product);
+        const orderValue = price * quantity;
 
-            body.order_value = price*quantity;
-             // update the data
-             OrderModel.updateOne({ id }, body, function(err, data){
-                 if(err) throw err;
- 
-                 return res.status(201).send({ msg : "Record Updated...!"});
-             })
- 
-         }else{
-             return res.status(401).send({ error : "Order Not Found...!"});
-         }
-       
+        const updatedOrder = {
+            product,
+            quantity,
+            order_value: orderValue,
+        };
 
+        // Use async/await with updateOne
+        await OrderModel.updateOne({ id }, updatedOrder);
+
+        return res.status(200).json({ msg: "Record Updated" });
     } catch (error) {
-        return res.status(401).send({ error });
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 }
 

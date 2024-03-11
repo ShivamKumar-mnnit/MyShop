@@ -43,7 +43,7 @@ router.route('/orders').get(Auth,orderController.getAllOrder) // get all orders
 router.route('/order/:id').get(Auth,orderController.getOrderbyid) // get one order by id
 
 /** PUT Method */
-router.route('/order/edit').put(Auth,orderController.editOrder); // is use to update the order
+router.route('/order/edit/:id').put(Auth,orderController.editOrder); // is use to update the order
 
 /** DELETE Method */
 router.route('/order/delete/:id').delete(Auth,orderController.deleteOrder); // is use to delete the order

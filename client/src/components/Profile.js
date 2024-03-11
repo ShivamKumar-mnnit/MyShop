@@ -8,6 +8,8 @@ import useFetch from '../hooks/fetch.hook';
 import { updateUser } from '../helper/helper'
 import { useNavigate } from 'react-router-dom'
 
+import FadeLoader from "react-spinners/FadeLoader";
+
 import { googleLogout } from '@react-oauth/google';
 
 import styles from '../styles/Username.module.css';
@@ -61,7 +63,7 @@ function userLogout(){
 
   
 
-  if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
+  if(isLoading) return <h1 className='text-2xl font-bold'> <FadeLoader color="#36d7b7" />  Loading</h1>;
   if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
 
   return (

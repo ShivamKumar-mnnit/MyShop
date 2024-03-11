@@ -1,0 +1,26 @@
+.modalclosebtn{
+    background-color: black;
+}
+.modalsavebtn{
+    background-color: blue;
+}
+
+.closebtn{
+    color: black;
+    background-color: aquamarine;
+}
+
+.overflow-x-auto {
+    overflow-x: auto;
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #1303a1 transparent; /* For Firefox */
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar {
+    width: 6px; /* Set the width of the scrollbar */
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the thumb */
+  }
+  

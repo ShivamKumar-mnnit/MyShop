@@ -9,6 +9,8 @@ import { useAuthStore } from '../store/store'
 import { verifyPassword } from '../helper/helper'
 import styles from '../styles/Username.module.css';
 
+import FadeLoader from "react-spinners/FadeLoader";
+
 export default function Password() {
 
   const navigate = useNavigate()
@@ -39,7 +41,7 @@ export default function Password() {
     }
   })
 
-  if(isLoading) return <h1 className='text-2xl font-bold'>isLoading</h1>;
+  if(isLoading) return <h1 className='text-2xl font-bold'><FadeLoader color="#36d7b7" /> Loading</h1>;
   if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
 
   return (
