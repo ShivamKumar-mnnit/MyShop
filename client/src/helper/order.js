@@ -18,6 +18,9 @@ export async function getAllOrders(){
 /** adding new order using post request */
 export async function addNewOrder({ id, customer_name, customer_email, product, quantity }) {
     try {
+        if(quantity<0){
+            return { error: "Quantity Should be greter than 0" };
+        }
         const response = await axios.post('/api/order/addneworder', {
             id,
             customer_name,
@@ -41,6 +44,9 @@ export async function addNewOrder({ id, customer_name, customer_email, product, 
 // to edit an order 
 export async function editOrder({ orderId, updatedData}) {
     try {
+        if(updatedData.quantity<0){
+            return { error: "Quantity Should be greter than 0" };
+        }
         const response = await axios.put(`/api/order/edit/${orderId}`, updatedData, {
             headers: {
                 Authorization: `Bearer ${token}`

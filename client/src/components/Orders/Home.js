@@ -259,7 +259,7 @@ const Home = () => {
               <th scope="col" colSpan="2">
 
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><div className="btn btn-success" data-toggle="modal">
-                  <AddCircleOutlineIcon /> <span>Add</span>
+                  <AddCircleOutlineIcon /> <span>New Order</span>
                 </div></button>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -273,7 +273,7 @@ const Home = () => {
                         <form onSubmit={handleFormSubmit}>
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Order Id</label>
-                            <input type="text" class="form-control" id="id" name='id' value={newOrderData.id} onChange={handleInputChange} minLength={1} required placeholder='*please enter an unique order id' />
+                            <input type="text" class="form-control" id="id" name='id' value={newOrderData.id} onChange={handleInputChange}  required placeholder='*please enter an unique order id' />
                           </div>
                           <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Customer Name</label>
@@ -306,8 +306,8 @@ const Home = () => {
                           </div>
 
                           <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Quantity</label>
-                            <input type="text" class="form-control" id="quantity" name='quantity' value={newOrderData.quantity} onChange={handleInputChange} minLength={1} required />
+                            <label for="recipient-name" class="col-form-label" placeholder='Enter quantity of products greater than 0'>Quantity</label>
+                            <input type="text" class="form-control" id="quantity" name='quantity' value={newOrderData.quantity} onChange={handleInputChange} min="0"  minLength={1} required />
                           </div>
                           <button type="submit" class="btn btn-primary modalsavebtn" >Add Order</button>
                         </form>

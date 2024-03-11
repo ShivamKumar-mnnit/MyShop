@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import avatar from '../assets/profile.png';
+import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from 'formik';
 import { profileValidation,Role} from '../helper/validate';
@@ -108,7 +109,11 @@ function userLogout(){
               </div>
 
 
-              <div className="text-center py-4">
+              <Link to="/"><div className="text-center py-1 ">
+                <span className='text-gray-500'><button className='btn btn-success'>Dashboard</button></span>
+              </div>
+              </Link>
+              <div className="text-center py-2">
                 <span className='text-gray-500'><button className='text-red-500' onClick={userLogout}>Logout</button></span>
               </div>
 

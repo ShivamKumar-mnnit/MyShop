@@ -21,6 +21,7 @@ export const OrderSchema = new mongoose.Schema({
   },
   quantity: { 
     type: Number,
+    min: [1, "Quantity must be greater than 0"],
     required:[true,"Enter the quantity"]
  },
   order_value: { type: Number },
